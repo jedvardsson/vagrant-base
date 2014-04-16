@@ -10,9 +10,10 @@ update-grub
 
 echo "Setting up /etc/sudoers..."
 apt-get install -y sudo
-add
-sed -i 's/%sudo ALL=(ALL:ALL) ALL/%sudo ALL=NOPASSWD: ALL/' /etc/sudoers
-grep -q 'Defaults *env_keep+=SSH_AUTH_SOCK' /etc/sudoers || echo 'Defaults    env_keep+=SSH_AUTH_SOCK' >> /etc/sudoers
+cat <<EOF > /etc/sudoers.d/vagrant.sudo
+%sudo ALL=NOPASSWD: ALL
+Defaults    env_keep+=SSH_AUTH_SOCK
+EOF
 
 echo "Setting up ssh..."
 mkdir /home/vagrant/.ssh
