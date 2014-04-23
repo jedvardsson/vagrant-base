@@ -34,6 +34,24 @@ read
 mount /dev/cdrom /media/cdrom
 /media/cdrom/VBoxLinuxAdditions.run
 
+# Fixing bug in some version of VBoxLinuxAdditions
+mount_vboxsf="/sbin/mount.vboxsf"
+if [ -h $mount_vboxsf ]; then
+	echo "hej"
+	if ! readlink -e $mount_vboxsf 2> /dev/null; then
+		mount_vboxsf_target="$(ls -1d /opt/VBoxGuestAdditions-*/lib/VBoxGuestAdditions/mount.vboxsf|head -1)"
+		if [ -n "$mount_vboxsf_target" ]; then
+			echo "Fixing broken symlink: $(stat --format "%N" $mount_vboxsf)"
+			rm $mount_vboxsf
+			ln -s $mount_vboxsf_target $mount_vboxsf
+		fi
+	fi
+
+	if ! readlink -e $mount_vboxsf 2> /dev/null; then
+		echo "ERROR: Unable to fix broken symlink: $mount_vboxsf"
+	fi
+fi
+
 apt-get clean
 echo "Removing old kernels. Current kernel: $(uname -a)"
 apt-get remove --purge $(dpkg -l 'linux-*' | sed '/^ii/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d')
