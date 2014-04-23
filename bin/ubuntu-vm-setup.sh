@@ -11,9 +11,10 @@ update-grub
 
 echo "Setting up /etc/sudoers..."
 apt-get install -y sudo
-cat <<EOF > /etc/sudoers.d/vagrant.sudo
+cat <<EOF > /etc/sudoers.d/vagrant
 %sudo ALL=NOPASSWD: ALL
 EOF
+chmod 0440 /etc/sudoers.d/vagrant
 
 echo "Setting up ssh..."
 mkdir /home/vagrant/.ssh
@@ -83,9 +84,11 @@ Make sure to remove .bash_history from /root and /home/vagrant.
 Log in as vagrant user and execute:
 
 
-sudo rm /root/.bash_history
+sudo rm /root/.bash_history 2>/dev/null
+sudo rm /root/.lesshst  2>/dev/null
 export HISTFILE=
-rm /home/vagrant/.bash_history
+rm /home/vagrant/.bash_history 2>/dev/null
+rm /home/vagrant/.lesshst 2>/dev/null
 exit
 EOF
 
