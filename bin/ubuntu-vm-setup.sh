@@ -6,13 +6,13 @@ read
 
 echo "Setting up grub timeout..."
 sed -i 's/^GRUB_TIMEOUT=.*/GRUB_TIMEOUT=1/' /etc/default/grub
+sed -i 's/^GRUB_HIDDEN_TIMEOUT_QUIET=true/#\0/' /etc/default/grub
 update-grub
 
 echo "Setting up /etc/sudoers..."
 apt-get install -y sudo
 cat <<EOF > /etc/sudoers.d/vagrant.sudo
 %sudo ALL=NOPASSWD: ALL
-Defaults    env_keep+=SSH_AUTH_SOCK
 EOF
 
 echo "Setting up ssh..."
