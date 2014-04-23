@@ -26,7 +26,7 @@ update-alternatives --set editor /usr/bin/vim.basic
 apt-get install -y zerofree
 apt-get install -y lsof
 
-apt-get install -y linux-headers-$(uname -r) build-essential
+apt-get install -y linux-headers-$(uname -r) build-essential dkms
 
 echo
 echo "Insert the Virtualbox Guest Addtion CD (HOST+D in console) and press enter..."
