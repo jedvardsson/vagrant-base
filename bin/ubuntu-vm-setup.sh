@@ -43,6 +43,21 @@ Done.
 
 Manual steps left:
 
+Compact disk
+------------
+Reboot in rescue mode as root and execute:
+
+mount -n -o remount,ro -t ext4 /dev/sda1 /
+zerofree /dev/sda1
+shutdown -h now
+
+
+On host system execute:
+
+vboxmanage modifyhd ~/VirtualBox\ VMs/ubuntu-12.04/ubuntu-12.04.vdi --compact
+
+
+
 Remove bash history
 -------------------
 
