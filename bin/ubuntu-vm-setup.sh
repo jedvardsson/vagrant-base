@@ -35,6 +35,8 @@ mount /dev/cdrom /media/cdrom
 /media/cdrom/VBoxLinuxAdditions.run
 
 apt-get clean
+echo "Removing old kernels. Current kernel: $(uname -a)"
+apt-get remove --purge $(dpkg -l 'linux-*' | sed '/^ii/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d')
 
 cat <<EOF
 Done.
