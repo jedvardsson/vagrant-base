@@ -12,7 +12,7 @@ update-grub
 echo "Setting up /etc/sudoers..."
 apt-get install -y sudo
 cat <<EOF > /etc/sudoers.d/vagrant
-%sudo ALL=NOPASSWD: ALL
+vagrant ALL=(ALL) NOPASSWD:ALL
 EOF
 chmod 0440 /etc/sudoers.d/vagrant
 
